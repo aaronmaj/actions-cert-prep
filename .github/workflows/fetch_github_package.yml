@@ -1,0 +1,21 @@
+name: Fetch GitHub Pa
+
+on: [ push, pull_request ]
+
+jobs:
+  fetch-package:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '14'
+        registry-url: 'https://npm.pkg.github.com'
+
+    - name: Install package
+      run: npm install @aaronmaj/rest@18.0.0
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
